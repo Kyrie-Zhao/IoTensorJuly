@@ -1,0 +1,542 @@
+{
+  "name": "vgg_11_dp_parallel_merge",
+  "input": {
+    "type": "placeholder",
+    "name": "0",
+    "hint_name": "0",
+    "output_shape": [
+      3,
+      224,
+      224
+    ]
+  },
+  "blocks": [
+    {
+      "enter_name": "0",
+      "enter_node": {
+        "type": "placeholder",
+        "name": "0",
+        "hint_name": "0",
+        "output_shape": [
+          3,
+          224,
+          224
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "1",
+          "hint_name": "1",
+          "inputs": [
+            [
+              [
+                "0",
+                0,
+                3
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            224,
+            224
+          ]
+        },
+        {
+          "type": "pool",
+          "name": "2",
+          "hint_name": "2",
+          "inputs": [
+            [
+              [
+                "1",
+                0,
+                64
+              ]
+            ]
+          ],
+          "pool_type": "max",
+          "kernel": [
+            2,
+            2
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "output_shape": [
+            64,
+            112,
+            112
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "3",
+          "hint_name": "3",
+          "inputs": [
+            [
+              [
+                "2",
+                0,
+                64
+              ]
+            ]
+          ],
+          "out_channels": 128,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            128,
+            112,
+            112
+          ]
+        },
+        {
+          "type": "pool",
+          "name": "4",
+          "hint_name": "4",
+          "inputs": [
+            [
+              [
+                "3",
+                0,
+                128
+              ]
+            ]
+          ],
+          "pool_type": "max",
+          "kernel": [
+            2,
+            2
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "output_shape": [
+            128,
+            56,
+            56
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "5",
+          "hint_name": "5",
+          "inputs": [
+            [
+              [
+                "4",
+                0,
+                128
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            56,
+            56
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "6",
+          "hint_name": "6",
+          "inputs": [
+            [
+              [
+                "5",
+                0,
+                256
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            56,
+            56
+          ]
+        },
+        {
+          "type": "pool",
+          "name": "7",
+          "hint_name": "7",
+          "inputs": [
+            [
+              [
+                "6",
+                0,
+                256
+              ]
+            ]
+          ],
+          "pool_type": "max",
+          "kernel": [
+            2,
+            2
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "output_shape": [
+            256,
+            28,
+            28
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "8",
+          "hint_name": "8",
+          "inputs": [
+            [
+              [
+                "7",
+                0,
+                256
+              ]
+            ]
+          ],
+          "out_channels": 512,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            512,
+            28,
+            28
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "9",
+          "hint_name": "9",
+          "inputs": [
+            [
+              [
+                "8",
+                0,
+                512
+              ]
+            ]
+          ],
+          "out_channels": 512,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            512,
+            28,
+            28
+          ]
+        },
+        {
+          "type": "pool",
+          "name": "10",
+          "hint_name": "10",
+          "inputs": [
+            [
+              [
+                "9",
+                0,
+                512
+              ]
+            ]
+          ],
+          "pool_type": "max",
+          "kernel": [
+            2,
+            2
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "output_shape": [
+            512,
+            14,
+            14
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "11",
+          "hint_name": "11",
+          "inputs": [
+            [
+              [
+                "10",
+                0,
+                512
+              ]
+            ]
+          ],
+          "out_channels": 512,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            512,
+            14,
+            14
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "12",
+          "hint_name": "12",
+          "inputs": [
+            [
+              [
+                "11",
+                0,
+                512
+              ]
+            ]
+          ],
+          "out_channels": 512,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            512,
+            14,
+            14
+          ]
+        },
+        {
+          "type": "pool",
+          "name": "13",
+          "hint_name": "13",
+          "inputs": [
+            [
+              [
+                "12",
+                0,
+                512
+              ]
+            ]
+          ],
+          "pool_type": "max",
+          "kernel": [
+            2,
+            2
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "output_shape": [
+            512,
+            7,
+            7
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "pool",
+        "name": "14",
+        "hint_name": "14",
+        "inputs": [
+          [
+            [
+              "13",
+              0,
+              512
+            ]
+          ]
+        ],
+        "pool_type": "global_avg",
+        "kernel": [
+          7,
+          7
+        ],
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          512,
+          1,
+          1
+        ]
+      },
+      "stages": [
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "2",
+            "3",
+            "4"
+          ]
+        ],
+        [
+          [
+            "5",
+            "6"
+          ]
+        ],
+        [
+          [
+            "7"
+          ]
+        ],
+        [
+          [
+            "8",
+            "9"
+          ]
+        ],
+        [
+          [
+            "10"
+          ]
+        ],
+        [
+          [
+            "11",
+            "12"
+          ]
+        ],
+        [
+          [
+            "13",
+            "14"
+          ]
+        ]
+      ]
+    }
+  ]
+}

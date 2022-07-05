@@ -1,0 +1,20 @@
+# started on Fri May 20 15:30:38 2022
+
+
+ Performance counter stats for process id '6238':
+
+     4,662,065,872      cpu-cycles                                                    (32.84%)
+     3,256,355,586      instructions              #    0.70  insn per cycle           (41.26%)
+       652,942,225      cache-references                                              (41.29%)
+           472,384      cache-misses              #    0.072 % of all cache refs      (41.30%)
+        49,396,258      LLC-loads                                                     (41.71%)
+            73,303      LLC-load-misses           #    0.15% of all LL-cache hits     (41.95%)
+            34,230      LLC-store-misses                                              (16.77%)
+        11,812,674      LLC-stores                                                    (16.76%)
+       103,541,748      L1-dcache-load-misses     #   10.19% of all L1-dcache hits    (25.15%)
+     1,016,191,146      L1-dcache-loads                                               (33.53%)
+       571,404,859      L1-dcache-stores                                              (33.53%)
+       296,297,558      L1-icache-load-misses                                         (33.20%)
+
+       1.002388712 seconds time elapsed
+

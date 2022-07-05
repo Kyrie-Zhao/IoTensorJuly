@@ -1,0 +1,20 @@
+# started on Fri May 20 14:37:03 2022
+
+
+ Performance counter stats for process id '16300':
+
+     4,648,812,209      cpu-cycles                                                    (32.84%)
+     3,167,415,286      instructions              #    0.68  insn per cycle           (41.26%)
+       633,130,546      cache-references                                              (41.28%)
+           605,722      cache-misses              #    0.096 % of all cache refs      (41.49%)
+        48,066,131      LLC-loads                                                     (41.88%)
+            49,013      LLC-load-misses           #    0.10% of all LL-cache hits     (41.93%)
+            45,476      LLC-store-misses                                              (16.77%)
+        11,025,370      LLC-stores                                                    (16.77%)
+       100,596,343      L1-dcache-load-misses     #   10.32% of all L1-dcache hits    (25.15%)
+       975,201,990      L1-dcache-loads                                               (33.54%)
+       548,657,672      L1-dcache-stores                                              (33.39%)
+       287,178,248      L1-icache-load-misses                                         (33.00%)
+
+       1.002057525 seconds time elapsed
+

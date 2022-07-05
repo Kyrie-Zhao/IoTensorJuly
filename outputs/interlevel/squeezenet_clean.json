@@ -1,0 +1,1977 @@
+{
+  "name": "squeezenet_dp_parallel_merge",
+  "input": {
+    "type": "placeholder",
+    "name": "0",
+    "hint_name": "0",
+    "output_shape": [
+      3,
+      224,
+      224
+    ]
+  },
+  "blocks": [
+    {
+      "enter_name": "0",
+      "enter_node": {
+        "type": "placeholder",
+        "name": "0",
+        "hint_name": "0",
+        "output_shape": [
+          3,
+          224,
+          224
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "1",
+          "hint_name": "1",
+          "inputs": [
+            [
+              [
+                "0",
+                0,
+                3
+              ]
+            ]
+          ],
+          "out_channels": 96,
+          "kernel": [
+            7,
+            7
+          ],
+          "stride": [
+            2,
+            2
+          ],
+          "padding": [
+            3,
+            3
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            96,
+            112,
+            112
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "pool",
+        "name": "2",
+        "hint_name": "2",
+        "inputs": [
+          [
+            [
+              "1",
+              0,
+              96
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          96,
+          55,
+          55
+        ]
+      },
+      "stages": [
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "2"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "2",
+      "enter_node": {
+        "type": "pool",
+        "name": "2",
+        "hint_name": "2",
+        "inputs": [
+          [
+            [
+              "1",
+              0,
+              96
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          96,
+          55,
+          55
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "3",
+          "hint_name": "3 7",
+          "inputs": [
+            [
+              [
+                "2",
+                0,
+                96
+              ]
+            ]
+          ],
+          "out_channels": 144,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            144,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "4",
+          "hint_name": "4",
+          "inputs": [
+            [
+              [
+                "3",
+                0,
+                16
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "5",
+          "hint_name": "5",
+          "inputs": [
+            [
+              [
+                "3",
+                0,
+                16
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "6",
+          "hint_name": "6",
+          "inputs": [
+            [
+              [
+                "4",
+                0,
+                64
+              ]
+            ],
+            [
+              [
+                "5",
+                0,
+                64
+              ]
+            ]
+          ],
+          "output_shape": [
+            128,
+            55,
+            55
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "8",
+        "hint_name": "8",
+        "inputs": [
+          [
+            [
+              "6",
+              0,
+              128
+            ],
+            [
+              "3",
+              16,
+              144
+            ]
+          ]
+        ],
+        "output_shape": [
+          128,
+          55,
+          55
+        ]
+      },
+      "stages": [
+        [
+          [
+            "3"
+          ]
+        ],
+        [
+          [
+            "4"
+          ]
+        ],
+        [
+          [
+            "5",
+            "6"
+          ]
+        ],
+        [
+          [
+            "8"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "8",
+      "enter_node": {
+        "type": "identity",
+        "name": "8",
+        "hint_name": "8",
+        "inputs": [
+          [
+            [
+              "6",
+              0,
+              128
+            ],
+            [
+              "3",
+              16,
+              144
+            ]
+          ]
+        ],
+        "output_shape": [
+          128,
+          55,
+          55
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "9",
+          "hint_name": "9",
+          "inputs": [
+            [
+              [
+                "8",
+                0,
+                128
+              ]
+            ]
+          ],
+          "out_channels": 16,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            16,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "10",
+          "hint_name": "10",
+          "inputs": [
+            [
+              [
+                "9",
+                0,
+                16
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "11",
+          "hint_name": "11",
+          "inputs": [
+            [
+              [
+                "9",
+                0,
+                16
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "12",
+          "hint_name": "12",
+          "inputs": [
+            [
+              [
+                "10",
+                0,
+                64
+              ]
+            ],
+            [
+              [
+                "11",
+                0,
+                64
+              ]
+            ]
+          ],
+          "output_shape": [
+            128,
+            55,
+            55
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "13",
+        "hint_name": "13",
+        "inputs": [
+          [
+            [
+              "12",
+              0,
+              128
+            ],
+            [
+              "8",
+              0,
+              128
+            ]
+          ]
+        ],
+        "output_shape": [
+          128,
+          55,
+          55
+        ]
+      },
+      "stages": [
+        [
+          [
+            "9",
+            "10",
+            "11"
+          ]
+        ],
+        [
+          [
+            "12"
+          ]
+        ],
+        [
+          [
+            "13"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "13",
+      "enter_node": {
+        "type": "identity",
+        "name": "13",
+        "hint_name": "13",
+        "inputs": [
+          [
+            [
+              "12",
+              0,
+              128
+            ],
+            [
+              "8",
+              0,
+              128
+            ]
+          ]
+        ],
+        "output_shape": [
+          128,
+          55,
+          55
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "14",
+          "hint_name": "14 18",
+          "inputs": [
+            [
+              [
+                "13",
+                0,
+                128
+              ]
+            ]
+          ],
+          "out_channels": 288,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            288,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "15",
+          "hint_name": "15",
+          "inputs": [
+            [
+              [
+                "14",
+                0,
+                32
+              ]
+            ]
+          ],
+          "out_channels": 128,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            128,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "16",
+          "hint_name": "16",
+          "inputs": [
+            [
+              [
+                "14",
+                0,
+                32
+              ]
+            ]
+          ],
+          "out_channels": 128,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            128,
+            55,
+            55
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "17",
+          "hint_name": "17",
+          "inputs": [
+            [
+              [
+                "15",
+                0,
+                128
+              ]
+            ],
+            [
+              [
+                "16",
+                0,
+                128
+              ]
+            ]
+          ],
+          "output_shape": [
+            256,
+            55,
+            55
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "19",
+        "hint_name": "19",
+        "inputs": [
+          [
+            [
+              "17",
+              0,
+              256
+            ],
+            [
+              "14",
+              32,
+              288
+            ]
+          ]
+        ],
+        "output_shape": [
+          256,
+          55,
+          55
+        ]
+      },
+      "stages": [
+        [
+          [
+            "14"
+          ]
+        ],
+        [
+          [
+            "15"
+          ]
+        ],
+        [
+          [
+            "16",
+            "17"
+          ]
+        ],
+        [
+          [
+            "19"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "19",
+      "enter_node": {
+        "type": "identity",
+        "name": "19",
+        "hint_name": "19",
+        "inputs": [
+          [
+            [
+              "17",
+              0,
+              256
+            ],
+            [
+              "14",
+              32,
+              288
+            ]
+          ]
+        ],
+        "output_shape": [
+          256,
+          55,
+          55
+        ]
+      },
+      "inner_nodes": [],
+      "exit_node": {
+        "type": "pool",
+        "name": "20",
+        "hint_name": "20",
+        "inputs": [
+          [
+            [
+              "19",
+              0,
+              256
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          256,
+          27,
+          27
+        ]
+      },
+      "stages": [
+        [
+          [
+            "20"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "20",
+      "enter_node": {
+        "type": "pool",
+        "name": "20",
+        "hint_name": "20",
+        "inputs": [
+          [
+            [
+              "19",
+              0,
+              256
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          256,
+          27,
+          27
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "21",
+          "hint_name": "21",
+          "inputs": [
+            [
+              [
+                "20",
+                0,
+                256
+              ]
+            ]
+          ],
+          "out_channels": 32,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            32,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "22",
+          "hint_name": "22",
+          "inputs": [
+            [
+              [
+                "21",
+                0,
+                32
+              ]
+            ]
+          ],
+          "out_channels": 128,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            128,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "23",
+          "hint_name": "23",
+          "inputs": [
+            [
+              [
+                "21",
+                0,
+                32
+              ]
+            ]
+          ],
+          "out_channels": 128,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            128,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "24",
+          "hint_name": "24",
+          "inputs": [
+            [
+              [
+                "22",
+                0,
+                128
+              ]
+            ],
+            [
+              [
+                "23",
+                0,
+                128
+              ]
+            ]
+          ],
+          "output_shape": [
+            256,
+            27,
+            27
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "25",
+        "hint_name": "25",
+        "inputs": [
+          [
+            [
+              "24",
+              0,
+              256
+            ],
+            [
+              "20",
+              0,
+              256
+            ]
+          ]
+        ],
+        "output_shape": [
+          256,
+          27,
+          27
+        ]
+      },
+      "stages": [
+        [
+          [
+            "21",
+            "22",
+            "23"
+          ]
+        ],
+        [
+          [
+            "24",
+            "25"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "25",
+      "enter_node": {
+        "type": "identity",
+        "name": "25",
+        "hint_name": "25",
+        "inputs": [
+          [
+            [
+              "24",
+              0,
+              256
+            ],
+            [
+              "20",
+              0,
+              256
+            ]
+          ]
+        ],
+        "output_shape": [
+          256,
+          27,
+          27
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "26",
+          "hint_name": "26 30",
+          "inputs": [
+            [
+              [
+                "25",
+                0,
+                256
+              ]
+            ]
+          ],
+          "out_channels": 432,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            432,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "27",
+          "hint_name": "27",
+          "inputs": [
+            [
+              [
+                "26",
+                0,
+                48
+              ]
+            ]
+          ],
+          "out_channels": 192,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            192,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "28",
+          "hint_name": "28",
+          "inputs": [
+            [
+              [
+                "26",
+                0,
+                48
+              ]
+            ]
+          ],
+          "out_channels": 192,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            192,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "29",
+          "hint_name": "29",
+          "inputs": [
+            [
+              [
+                "27",
+                0,
+                192
+              ]
+            ],
+            [
+              [
+                "28",
+                0,
+                192
+              ]
+            ]
+          ],
+          "output_shape": [
+            384,
+            27,
+            27
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "31",
+        "hint_name": "31",
+        "inputs": [
+          [
+            [
+              "29",
+              0,
+              384
+            ],
+            [
+              "26",
+              48,
+              432
+            ]
+          ]
+        ],
+        "output_shape": [
+          384,
+          27,
+          27
+        ]
+      },
+      "stages": [
+        [
+          [
+            "26"
+          ]
+        ],
+        [
+          [
+            "27"
+          ]
+        ],
+        [
+          [
+            "28",
+            "29"
+          ]
+        ],
+        [
+          [
+            "31"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "31",
+      "enter_node": {
+        "type": "identity",
+        "name": "31",
+        "hint_name": "31",
+        "inputs": [
+          [
+            [
+              "29",
+              0,
+              384
+            ],
+            [
+              "26",
+              48,
+              432
+            ]
+          ]
+        ],
+        "output_shape": [
+          384,
+          27,
+          27
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "32",
+          "hint_name": "32",
+          "inputs": [
+            [
+              [
+                "31",
+                0,
+                384
+              ]
+            ]
+          ],
+          "out_channels": 48,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            48,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "33",
+          "hint_name": "33",
+          "inputs": [
+            [
+              [
+                "32",
+                0,
+                48
+              ]
+            ]
+          ],
+          "out_channels": 192,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            192,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "34",
+          "hint_name": "34",
+          "inputs": [
+            [
+              [
+                "32",
+                0,
+                48
+              ]
+            ]
+          ],
+          "out_channels": 192,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            192,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "35",
+          "hint_name": "35",
+          "inputs": [
+            [
+              [
+                "33",
+                0,
+                192
+              ]
+            ],
+            [
+              [
+                "34",
+                0,
+                192
+              ]
+            ]
+          ],
+          "output_shape": [
+            384,
+            27,
+            27
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "36",
+        "hint_name": "36",
+        "inputs": [
+          [
+            [
+              "35",
+              0,
+              384
+            ],
+            [
+              "31",
+              0,
+              384
+            ]
+          ]
+        ],
+        "output_shape": [
+          384,
+          27,
+          27
+        ]
+      },
+      "stages": [
+        [
+          [
+            "32",
+            "33",
+            "34"
+          ]
+        ],
+        [
+          [
+            "35"
+          ]
+        ],
+        [
+          [
+            "36"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "36",
+      "enter_node": {
+        "type": "identity",
+        "name": "36",
+        "hint_name": "36",
+        "inputs": [
+          [
+            [
+              "35",
+              0,
+              384
+            ],
+            [
+              "31",
+              0,
+              384
+            ]
+          ]
+        ],
+        "output_shape": [
+          384,
+          27,
+          27
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "37",
+          "hint_name": "37 41",
+          "inputs": [
+            [
+              [
+                "36",
+                0,
+                384
+              ]
+            ]
+          ],
+          "out_channels": 576,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            576,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "38",
+          "hint_name": "38",
+          "inputs": [
+            [
+              [
+                "37",
+                0,
+                64
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "39",
+          "hint_name": "39",
+          "inputs": [
+            [
+              [
+                "37",
+                0,
+                64
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            27,
+            27
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "40",
+          "hint_name": "40",
+          "inputs": [
+            [
+              [
+                "38",
+                0,
+                256
+              ]
+            ],
+            [
+              [
+                "39",
+                0,
+                256
+              ]
+            ]
+          ],
+          "output_shape": [
+            512,
+            27,
+            27
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "42",
+        "hint_name": "42",
+        "inputs": [
+          [
+            [
+              "40",
+              0,
+              512
+            ],
+            [
+              "37",
+              64,
+              576
+            ]
+          ]
+        ],
+        "output_shape": [
+          512,
+          27,
+          27
+        ]
+      },
+      "stages": [
+        [
+          [
+            "37"
+          ]
+        ],
+        [
+          [
+            "38"
+          ]
+        ],
+        [
+          [
+            "39",
+            "40",
+            "42"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "42",
+      "enter_node": {
+        "type": "identity",
+        "name": "42",
+        "hint_name": "42",
+        "inputs": [
+          [
+            [
+              "40",
+              0,
+              512
+            ],
+            [
+              "37",
+              64,
+              576
+            ]
+          ]
+        ],
+        "output_shape": [
+          512,
+          27,
+          27
+        ]
+      },
+      "inner_nodes": [],
+      "exit_node": {
+        "type": "pool",
+        "name": "43",
+        "hint_name": "43",
+        "inputs": [
+          [
+            [
+              "42",
+              0,
+              512
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          512,
+          13,
+          13
+        ]
+      },
+      "stages": [
+        [
+          [
+            "43"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "43",
+      "enter_node": {
+        "type": "pool",
+        "name": "43",
+        "hint_name": "43",
+        "inputs": [
+          [
+            [
+              "42",
+              0,
+              512
+            ]
+          ]
+        ],
+        "pool_type": "max",
+        "kernel": [
+          3,
+          3
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          512,
+          13,
+          13
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "44",
+          "hint_name": "44",
+          "inputs": [
+            [
+              [
+                "43",
+                0,
+                512
+              ]
+            ]
+          ],
+          "out_channels": 64,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            64,
+            13,
+            13
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "45",
+          "hint_name": "45",
+          "inputs": [
+            [
+              [
+                "44",
+                0,
+                64
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            3,
+            3
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            1,
+            1
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            13,
+            13
+          ]
+        },
+        {
+          "type": "conv",
+          "name": "46",
+          "hint_name": "46",
+          "inputs": [
+            [
+              [
+                "44",
+                0,
+                64
+              ]
+            ]
+          ],
+          "out_channels": 256,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            256,
+            13,
+            13
+          ]
+        },
+        {
+          "type": "identity",
+          "name": "47",
+          "hint_name": "47",
+          "inputs": [
+            [
+              [
+                "45",
+                0,
+                256
+              ]
+            ],
+            [
+              [
+                "46",
+                0,
+                256
+              ]
+            ]
+          ],
+          "output_shape": [
+            512,
+            13,
+            13
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "identity",
+        "name": "48",
+        "hint_name": "48",
+        "inputs": [
+          [
+            [
+              "47",
+              0,
+              512
+            ],
+            [
+              "43",
+              0,
+              512
+            ]
+          ]
+        ],
+        "output_shape": [
+          512,
+          13,
+          13
+        ]
+      },
+      "stages": [
+        [
+          [
+            "44",
+            "45"
+          ]
+        ],
+        [
+          [
+            "46",
+            "47",
+            "48"
+          ]
+        ]
+      ]
+    },
+    {
+      "enter_name": "48",
+      "enter_node": {
+        "type": "identity",
+        "name": "48",
+        "hint_name": "48",
+        "inputs": [
+          [
+            [
+              "47",
+              0,
+              512
+            ],
+            [
+              "43",
+              0,
+              512
+            ]
+          ]
+        ],
+        "output_shape": [
+          512,
+          13,
+          13
+        ]
+      },
+      "inner_nodes": [
+        {
+          "type": "conv",
+          "name": "49",
+          "hint_name": "49",
+          "inputs": [
+            [
+              [
+                "48",
+                0,
+                512
+              ]
+            ]
+          ],
+          "out_channels": 1000,
+          "kernel": [
+            1,
+            1
+          ],
+          "stride": [
+            1,
+            1
+          ],
+          "padding": [
+            0,
+            0
+          ],
+          "groups": 1,
+          "act": "relu",
+          "output_shape": [
+            1000,
+            13,
+            13
+          ]
+        }
+      ],
+      "exit_node": {
+        "type": "pool",
+        "name": "50",
+        "hint_name": "50",
+        "inputs": [
+          [
+            [
+              "49",
+              0,
+              1000
+            ]
+          ]
+        ],
+        "pool_type": "global_avg",
+        "kernel": [
+          13,
+          13
+        ],
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          0,
+          0
+        ],
+        "output_shape": [
+          1000,
+          1,
+          1
+        ]
+      },
+      "stages": [
+        [
+          [
+            "49"
+          ]
+        ],
+        [
+          [
+            "50"
+          ]
+        ]
+      ]
+    }
+  ]
+}

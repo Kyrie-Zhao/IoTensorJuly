@@ -1,0 +1,20 @@
+# started on Fri May 20 15:30:37 2022
+
+
+ Performance counter stats for 'system wide':
+
+     4,951,883,859      cpu-cycles                                                    (32.84%)
+     3,428,847,241      instructions              #    0.69  insn per cycle           (41.25%)
+       667,841,670      cache-references                                              (41.27%)
+         2,213,777      cache-misses              #    0.331 % of all cache refs      (41.33%)
+        49,956,283      LLC-loads                                                     (41.72%)
+           154,679      LLC-load-misses           #    0.31% of all LL-cache hits     (41.94%)
+           127,168      LLC-store-misses                                              (16.78%)
+        12,588,925      LLC-stores                                                    (16.78%)
+       104,576,016      L1-dcache-load-misses     #   10.21% of all L1-dcache hits    (25.16%)
+     1,024,478,131      L1-dcache-loads                                               (33.55%)
+       577,177,588      L1-dcache-stores                                              (33.55%)
+       301,335,830      L1-icache-load-misses                                         (33.14%)
+
+       1.002049504 seconds time elapsed
+
